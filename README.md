@@ -1,13 +1,13 @@
 # 3MF Metadata GCode Patcher
 Ein Cross-Platform Toolset zur Batch-Verarbeitung von `.3mf`-Dateien. Es entpackt die Archive, injiziert automatisch Metadaten in enthaltene GCode-Dateien und verpackt alles wieder – vollautomatisch.
 
-Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen. [conversation_history:1][conversation_history:3]
+Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen. [conversation_history:3]
 
 ## ✨ Features
 
 - **Multi-Platform:** Native Scripts für Windows (PowerShell) und Linux/macOS (Bash). [conversation_history:3]
 - **Batch-Processing:** Verarbeitet automatisch alle `.3mf`-Dateien in einem Ordner.
-- **Intelligent:** Findet automatisch 1, 2 oder 3 `.gcode`-Dateien im `Metadata`-Unterordner. [conversation_history:1]
+- **Intelligent:** Findet automatisch 1, 2 oder 3 `.gcode`-Dateien im `Metadata`-Unterordner. 
 - **Präzise:** Fügt die Konfiguration exakt an der richtigen Stelle ein.
 - **Clean:** Hinterlässt keine temporären Dateien und stellt die Original-Dateinamen wieder her.
 
@@ -53,7 +53,7 @@ Rechtsklick auf die Datei → **"Mit PowerShell ausführen"** oder über das Ter
 
 ## 🐧 Nutzung: Linux / macOS (Bash)
 
-Diese Version ist ideal für Linux-Desktop, Server oder macOS. [conversation_history:1]
+Diese Version ist ideal für Linux-Desktop, Server oder macOS. 
 
 ### 1. Vorbereitung
 
