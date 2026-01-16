@@ -20,7 +20,7 @@ Dieses Script verarbeitet alle `.3mf`-Dateien in einem Ordner, entpackt sie, fü
 1. Repository klonen oder Datei herunterladen.
 2. Script ausführbar machen:
 
-   ```bash
+```bash
    chmod +x process_3mf.sh
 ```
 
@@ -121,6 +121,3 @@ echo "Alle Dateien wurden verarbeitet"
 - Empfehlung: Vorher ein Backup der `.3mf`-Dateien anlegen, da die Dateien in-place aktualisiert werden. 
 - macOS-Hinweis: Falls `sed -i` Probleme macht (BSD sed), muss die `sed`-Zeile ggf. angepasst werden (z.B. `sed -i '' ...`). 
 - License: MIT (oder anpassen, falls gewünscht).
-
-```
-
