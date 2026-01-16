@@ -1,4 +1,3 @@
-```md
 # 3MF Metadata GCode Patcher
 
 Dieses Script verarbeitet alle `.3mf`-Dateien in einem Ordner, entpackt sie, fügt in den enthaltenen `Metadata/*.gcode`-Dateien nach `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` ein und packt anschließend alles wieder zurück unter dem ursprünglichen Dateinamen. [conversation_history:1]
