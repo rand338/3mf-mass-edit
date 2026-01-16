@@ -1,15 +1,7 @@
-```markdown
 # 3MF Metadata GCode Patcher
-
-![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Linux%20|%20macOS-brightgreen)
-![Script](https://img.shields.io/badge/Language-PowerShell%20&%20Bash-blue)
-![License](https://img.shields.io/badge/License-MIT-orange)
-
 Ein Cross-Platform Toolset zur Batch-Verarbeitung von `.3mf`-Dateien. Es entpackt die Archive, injiziert automatisch Metadaten in enthaltene GCode-Dateien und verpackt alles wieder – vollautomatisch.
 
 Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen. [conversation_history:1][conversation_history:3]
-
----
 
 ## ✨ Features
 
@@ -111,11 +103,3 @@ Beide Scripte folgen der gleichen Logik, implementiert in ihrer jeweiligen Umgeb
 * **macOS User:** Das Bash-Script nutzt `sed`. macOS verwendet BSD-sed, was sich leicht von GNU-sed unterscheidet. Das Script sollte funktionieren, aber bei Fehlern (z.B. `invalid command code`) muss ggf. `sed -i '' ...` verwendet werden.
 
 ---
-
-## 📄 Lizenz
-
-MIT License - Feel free to fork, modify and share.
-
-```
-```
-
