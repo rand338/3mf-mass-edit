@@ -1,123 +1,121 @@
+```markdown
 # 3MF Metadata GCode Patcher
 
-Dieses Script verarbeitet alle `.3mf`-Dateien in einem Ordner, entpackt sie, fügt in den enthaltenen `Metadata/*.gcode`-Dateien nach `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` ein und packt anschließend alles wieder zurück unter dem ursprünglichen Dateinamen.
+![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Linux%20|%20macOS-brightgreen)
+![Script](https://img.shields.io/badge/Language-PowerShell%20&%20Bash-blue)
+![License](https://img.shields.io/badge/License-MIT-orange)
 
-## Features
+Ein Cross-Platform Toolset zur Batch-Verarbeitung von `.3mf`-Dateien. Es entpackt die Archive, injiziert automatisch Metadaten in enthaltene GCode-Dateien und verpackt alles wieder – vollautomatisch.
 
-- Batch-Verarbeitung aller `.3mf` im Zielordner.
-- Findet im entpackten Inhalt den Ordner `Metadata` und bearbeitet dort alle `.gcode`-Dateien (typisch 1–3 Dateien).
-- Fügt die Zeile direkt **unter** der passenden `; nozzle_volume = ...`-Zeile ein.
-- Packt den Ordner wieder und stellt den ursprünglichen `.3mf`-Namen wieder her.
+Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen. [conversation_history:1][conversation_history:3]
 
-## Voraussetzungen
+---
 
-- Bash (Linux/WSL empfohlen). 
-- `unzip` und `zip` müssen installiert sein. 
-- `sed` (GNU sed empfohlen, da `sed -i` verwendet wird). 
+## ✨ Features
 
-## Installation
+- **Multi-Platform:** Native Scripts für Windows (PowerShell) und Linux/macOS (Bash). [conversation_history:3]
+- **Batch-Processing:** Verarbeitet automatisch alle `.3mf`-Dateien in einem Ordner.
+- **Intelligent:** Findet automatisch 1, 2 oder 3 `.gcode`-Dateien im `Metadata`-Unterordner. [conversation_history:1]
+- **Präzise:** Fügt die Konfiguration exakt an der richtigen Stelle ein.
+- **Clean:** Hinterlässt keine temporären Dateien und stellt die Original-Dateinamen wieder her.
 
-1. Repository klonen oder Datei herunterladen.
-2. Script ausführbar machen:
+---
 
-```bash
-   chmod +x process_3mf.sh
+## 📂 Enthaltene Dateien
+
+| Datei | Beschreibung | System |
+| :--- | :--- | :--- |
+| `process_3mf.ps1` | Native PowerShell-Version (keine externen Tools nötig) | Windows 10/11 |
+| `process_3mf.sh` | Bash-Version (nutzt `zip`/`unzip`/`sed`) | Linux, macOS, WSL |
+
+---
+
+## 💻 Nutzung: Windows (PowerShell)
+
+Diese Version nutzt ausschließlich Windows-Bordmittel. [conversation_history:3]
+
+### 1. Vorbereitung
+Speichere das Script als `process_3mf.ps1` in deinem Ordner mit den `.3mf`-Dateien.
+
+### 2. Einmalige Einrichtung
+Falls noch nie Scripte ausgeführt wurden, öffne PowerShell als Administrator und erlaube die Ausführung:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 
-## Nutzung
+### 3. Ausführung
 
-Im aktuellen Ordner:
+Rechtsklick auf die Datei → **"Mit PowerShell ausführen"** oder über das Terminal:
+
+```powershell
+# Im aktuellen Verzeichnis
+.\process_3mf.ps1
+
+# Oder mit Pfad-Angabe
+.\process_3mf.ps1 -WorkingDir "C:\Pfad\zu\Dateien"
+```
+
+
+---
+
+## 🐧 Nutzung: Linux / macOS (Bash)
+
+Diese Version ist ideal für Linux-Desktop, Server oder macOS. [conversation_history:1]
+
+### 1. Vorbereitung
+
+Speichere das Script als `process_3mf.sh` und stelle sicher, dass `zip` und `unzip` installiert sind (meist vorinstalliert).
+
+### 2. Rechte vergeben
+
+Mache das Script ausführbar:
 
 ```bash
+chmod +x process_3mf.sh
+```
+
+
+### 3. Ausführung
+
+```bash
+# Im aktuellen Verzeichnis
 ./process_3mf.sh
-```
 
-Oder mit Zielordner als Parameter:
-
-```bash
-./process_3mf.sh /pfad/zu/deinen/3mf_dateien
-```
-
-Wichtig: Das Script überschreibt die ursprüngliche `.3mf`-Datei nach dem Neupacken wieder mit dem bearbeiteten Inhalt (Name bleibt gleich). 
-
-## Wie es funktioniert (kurz)
-
-- Jede `.3mf` wird temporär in `.zip` umbenannt (da der Inhalt wie ein ZIP-Archiv behandelt wird). 
-- Es wird in ein temporäres Verzeichnis entpackt, dann werden alle `Metadata/*.gcode` mit `sed` geändert. 
-- Danach wird der Inhalt wieder gezippt und zurück auf `.3mf` umbenannt; das Temp-Verzeichnis wird gelöscht. 
-
-
-### Script
-
-```bash
-#!/bin/bash
-
-# Verzeichnis mit den .3mf-Dateien (aktuelles Verzeichnis oder als Parameter übergeben)
-WORKING_DIR="${1:-.}"
-
-# In das Arbeitsverzeichnis wechseln
-cd "$WORKING_DIR" || exit 1
-
-# Alle .3mf-Dateien verarbeiten
-for file in *.3mf; do
-    # Prüfen ob Dateien existieren
-    if [ ! -f "$file" ]; then
-        echo "Keine .3mf-Dateien gefunden"
-        exit 1
-    fi
-    
-    # Originalnamen speichern
-    original_name="$file"
-    base_name="${file%.3mf}"
-    zip_name="${base_name}.zip"
-    
-    echo "Verarbeite: $original_name"
-    
-    # 1. Datei zu .zip umbenennen
-    mv "$original_name" "$zip_name"
-    
-    # 2. Temporäres Verzeichnis erstellen und entpacken
-    temp_dir="${base_name}_temp"
-    mkdir -p "$temp_dir"
-    unzip -q "$zip_name" -d "$temp_dir"
-    
-    # 3. .gcode-Dateien im Metadata-Ordner finden und bearbeiten
-    metadata_dir="$temp_dir/Metadata"
-    
-    if [ -d "$metadata_dir" ]; then
-        # Alle .gcode-Dateien im Metadata-Ordner durchgehen
-        find "$metadata_dir" -name "*.gcode" -type f | while read gcode_file; do
-            echo "  Bearbeite: $(basename "$gcode_file")"
-            
-            # Zeile nach "; nozzle_volume = " einfügen
-            sed -i '/^; nozzle_volume = /a\; nozzle_volume_type = Standard' "$gcode_file"
-        done
-    else
-        echo "  Warnung: Metadata-Ordner nicht gefunden"
-    fi
-    
-    # 4. Wieder packen
-    cd "$temp_dir" || exit 1
-    zip -q -r "../$zip_name" ./*
-    cd ..
-    
-    # 5. Zurück zum ursprünglichen Namen (.3mf) umbenennen
-    mv "$zip_name" "$original_name"
-    
-    # 6. Temporäres Verzeichnis löschen
-    rm -rf "$temp_dir"
-    
-    echo "Fertig: $original_name"
-    echo ""
-done
-
-echo "Alle Dateien wurden verarbeitet"
+# Oder mit Pfad-Angabe
+./process_3mf.sh /home/user/pfad/zu/dateien
 ```
 
 
-### Hinweise \& License
+---
 
-- Empfehlung: Vorher ein Backup der `.3mf`-Dateien anlegen, da die Dateien in-place aktualisiert werden. 
-- macOS-Hinweis: Falls `sed -i` Probleme macht (BSD sed), muss die `sed`-Zeile ggf. angepasst werden (z.B. `sed -i '' ...`). 
-- License: MIT (oder anpassen, falls gewünscht).
+## 🔧 Funktionsweise (Technical Deep Dive)
+
+Beide Scripte folgen der gleichen Logik, implementiert in ihrer jeweiligen Umgebungssprache:
+
+1. **Rename:** `.3mf` wird zu `.zip` umbenannt (3MF ist technisch ein ZIP-Container).
+2. **Extract:** Inhalt wird in einen temporären Ordner (`*_temp`) entpackt.
+3. **Patch:**
+    * **Bash:** Nutzt `sed`, um den Textstream zu bearbeiten.
+    * **PowerShell:** Liest die Datei in ein Array, injiziert die Zeile und schreibt zurück (UTF-8).
+4. **Repack:** Der Ordner wird wieder komprimiert.
+5. **Restore:** `.zip` wird zurück zu `.3mf` benannt.
+6. **Cleanup:** Temporäre Ordner werden gelöscht.
+
+---
+
+## ⚠️ Wichtige Hinweise
+
+* **Backup:** Das Script arbeitet **in-place**. Es überschreibt die existierenden `.3mf`-Dateien. Erstelle vor dem ersten großen Durchlauf ein Backup!
+* **Encoding:** Die GCode-Dateien werden als UTF-8 gespeichert.
+* **macOS User:** Das Bash-Script nutzt `sed`. macOS verwendet BSD-sed, was sich leicht von GNU-sed unterscheidet. Das Script sollte funktionieren, aber bei Fehlern (z.B. `invalid command code`) muss ggf. `sed -i '' ...` verwendet werden.
+
+---
+
+## 📄 Lizenz
+
+MIT License - Feel free to fork, modify and share.
+
+```
+```
+
