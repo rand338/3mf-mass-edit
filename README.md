@@ -5,7 +5,7 @@ Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_v
 
 ## ✨ Features
 
-- **Multi-Platform:** Native Scripts für Windows (PowerShell) und Linux/macOS (Bash). [conversation_history:3]
+- **Multi-Platform:** Native Scripts für Windows (PowerShell) und Linux/macOS (Bash).
 - **Batch-Processing:** Verarbeitet automatisch alle `.3mf`-Dateien in einem Ordner.
 - **Intelligent:** Findet automatisch 1, 2 oder 3 `.gcode`-Dateien im `Metadata`-Unterordner. 
 - **Präzise:** Fügt die Konfiguration exakt an der richtigen Stelle ein.
@@ -24,7 +24,7 @@ Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_v
 
 ## 💻 Nutzung: Windows (PowerShell)
 
-Diese Version nutzt ausschließlich Windows-Bordmittel. [conversation_history:3]
+Diese Version nutzt ausschließlich Windows-Bordmittel.
 
 ### 1. Vorbereitung
 Speichere das Script als `process_3mf.ps1` in deinem Ordner mit den `.3mf`-Dateien.
