@@ -1,7 +1,7 @@
 # 3MF Metadata GCode Patcher
 Ein Cross-Platform Toolset zur Batch-Verarbeitung von `.3mf`-Dateien. Es entpackt die Archive, injiziert automatisch Metadaten in enthaltene GCode-Dateien und verpackt alles wieder – vollautomatisch.
 
-Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen. [conversation_history:3]
+Speziell entwickelt, um in `Metadata/*.gcode` Dateien nach der Zeile `; nozzle_volume = ...` die Zeile `; nozzle_volume_type = Standard` einzufügen.
 
 ## ✨ Features
 
